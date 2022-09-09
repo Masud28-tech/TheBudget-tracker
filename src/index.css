@@ -1,13 +1,11 @@
-body {
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400&display=swap');
+#root, body, html{
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  height: 100%;
 }
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+body{
+  font-family: 'Manrope', sans-serif;  
+  background:linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('./assets/budgetImage.jpg');
+  background-size: cover;
+  overflow: hidden;
 }
