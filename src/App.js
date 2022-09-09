@@ -18,7 +18,7 @@ const App = () => {
         <Grid item xs={12} sm={3} className={classes.main}>
           <InputCard />
         </Grid>
-        <Grid item xs={12} sm={4} className={classes.desktop}>
+        <Grid item xs={12} sm={4}  className={classes.desktop}>
           <DetailsCard title="Income" />
         </Grid>
         <Grid item xs={12} sm={4} className={classes.last}>
