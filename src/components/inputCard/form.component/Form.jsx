@@ -1,7 +1,10 @@
 import { useState, useContext } from 'react';
 import { Button, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography } from '@material-ui/core';
-import { TransactionsContext } from '../../../context/transactionsContext';
 import { v4 as uuidv4 } from 'uuid';
+
+import { TransactionsContext } from '../../../context/transactionsContext';
+import { incomeCategories, expenseCategories } from '../../../constants/categories';
+import formatDate from '../../../utils/formatDate';
 import useStyles from './styles';
 
 const initialValues = {
@@ -9,7 +12,7 @@ const initialValues = {
     type: "",
     category: "",
     amount: "",
-    date: new Date(),
+    date: formatDate(new Date()),
 }
 const Form = () => {
     const classes = useStyles();
@@ -17,8 +20,10 @@ const Form = () => {
     const [formData, setFormData] = useState(initialValues);
     const { type, category, amount, date, id } = formData;
 
+    const selectedCategory = type === "Income" ? incomeCategories : expenseCategories;
+
     const createTransaction = () => {
-        const transaction = { ...formData, amount: Number(amount), id: uuidv4() };
+        const transaction = { ...formData, amount: Number(amount), id: uuidv4(), date: formatDate(date) };
         addTransaction(transaction);
         setFormData(initialValues);
     }
@@ -49,8 +54,13 @@ const Form = () => {
                         value={category}
                         onChange={(e) => setFormData({ ...formData, category: e.target.value })}
                     >
-                        <MenuItem value="Business">Business</MenuItem>
-                        <MenuItem value="Salaray">Salaray</MenuItem>
+                        {
+                            selectedCategory.map((c) => (
+                                <MenuItem key={c.type} value={c.type}>
+                                    {c.type}
+                                </MenuItem>
+                            ))
+                        }
                     </Select>
                 </FormControl>
             </Grid>
