@@ -3,9 +3,13 @@ A voice command expence tracker application and able to track and manupulate inc
 
 featuers:
 1. Uses 'Speechly' a machine learning based service integrated with reactJs.
-2. Can create pie charts of incomes and payments
-3. Can fill data manully using form.
-4. Voice command for data entry about transactions.
+2. Create pie charts of incomes and expenses.
+3. Voice recognision and automatic data filling about transactions.
+
+How to use:
+a] using voice command 
+  1. press the button 
+  2. press and hold spacebar while speaking and leave when done, it can be seen in the site what user is saying.
 
 Project deployed at https://thebudgetracker-masud.netlify.app/
 
