@@ -13,7 +13,7 @@ const InputCard = () => {
 
     return (
         <Card className={classes.root}>
-            <CardHeader title="Budget Tracker" subheader="Build on speechly" />
+            <CardHeader title="Budget Tracker" subheader="Created by Masud" />
             <CardContent>
                 <Typography align='center' variant='h5'>
                     Total Balance ₹{totalBalance}
