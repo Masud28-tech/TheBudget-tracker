@@ -1,38 +1,96 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { Button, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography } from '@material-ui/core';
+import { useSpeechContext } from '@speechly/react-client';
 import { v4 as uuidv4 } from 'uuid';
 
 import { TransactionsContext } from '../../../context/transactionsContext';
 import { incomeCategories, expenseCategories } from '../../../constants/categories';
 import formatDate from '../../../utils/formatDate';
 import useStyles from './styles';
+import { lightGreen } from '@material-ui/core/colors';
 
 const initialValues = {
     id: '',
     type: "",
     category: "",
-    amount: "",
+    amount: 0,
     date: formatDate(new Date()),
 }
 const Form = () => {
     const classes = useStyles();
+    const { segment } = useSpeechContext();
     const { addTransaction } = useContext(TransactionsContext);
     const [formData, setFormData] = useState(initialValues);
+
     const { type, category, amount, date, id } = formData;
 
     const selectedCategory = type === "Income" ? incomeCategories : expenseCategories;
 
+    //CREATION OF TRANSACTIONS 
+
     const createTransaction = () => {
+        if (Number.isNaN(Number(amount)) || !date.includes('-'))
+            return;
+
         const transaction = { ...formData, amount: Number(amount), id: uuidv4(), date: formatDate(date) };
         addTransaction(transaction);
         setFormData(initialValues);
     }
 
+    //B) USIGN SPEECH OR VOICE VIA SPEECHLY 
+    useEffect(() => {
+        if (segment) {
+            if (segment.intent.intent === 'add_income') {
+                setFormData({ ...formData, type: 'Income' });
+            }
+            else if (segment.intent.intent === 'add_expense') {
+                setFormData({ ...formData, type: 'Expense' })
+            }
+            else if (segment.isFinal && segment.intent.intent === 'create_transaction') {
+                createTransaction();
+            }
+            else if (segment.isFinal && segment.intent.intent === 'cancel_transaction') {
+                return setFormData(initialValues);
+            }
+
+            segment.entities.forEach((e) => {
+                switch (e.type) {
+                    case 'amount':
+                        setFormData({ ...formData, amount: e.value });
+                        break;
+                    case 'category':
+                        const category = `${e.value.charAt(0)}${e.value.slice(1).toLocaleLowerCase()}`
+                        if (incomeCategories.map((iC) => iC.type).includes(category)) {
+                            setFormData({ ...formData, type: 'Income', category: category });
+                        }
+                        else if (expenseCategories.map((iC) => iC.type).includes(category)) {
+                            setFormData({ ...formData, type: 'Expense', category: category });
+                        }
+                        break;
+                    case 'date':
+                        setFormData({ ...formData, date: e.value });
+                        break;
+                    default:
+                        break;
+                }
+            });
+
+            if (segment.isFinal && amount && category && type && date) {
+                createTransaction();
+            }
+        }
+
+    }, [segment])
+
+
+
     return (
         <Grid container spacing={2}>
             <Grid item xs={12}>
                 <Typography align='center' variant='subtitle2' gutterBottom>
-                    ...
+                    {
+                        segment && segment.words.map((word) => word.value).join(" ")
+                    }
                 </Typography>
             </Grid>
             <Grid item xs={6}>
@@ -43,7 +101,7 @@ const Form = () => {
                         onChange={(e) => setFormData({ ...formData, type: e.target.value })}
                     >
                         <MenuItem value="Income">Income</MenuItem>
-                        <MenuItem value="Expence">Expence</MenuItem>
+                        <MenuItem value="Expense">Expense</MenuItem>
                     </Select>
                 </FormControl>
             </Grid>
