@@ -9,7 +9,7 @@ const List = () => {
     const {transactions, deleteTransaction} = useContext(TransactionsContext);
 
     return (
-        <MuiList>
+        <MuiList className={classes.list}>
             {transactions && transactions.map((transaction) => (
                 <Slide direction='down' in mountOnEnter unmountOnExit key={transaction.id}>
                     <ListItem>
