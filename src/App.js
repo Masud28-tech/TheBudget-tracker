@@ -1,6 +1,7 @@
-import React from 'react';
+import { useRef, useEffect, useContext } from 'react';
 import { Grid } from '@material-ui/core';
 import { PushToTalkButtonContainer, PushToTalkButton } from '@speechly/react-ui';
+import { TransactionsContext } from './context/transactionsContext';
 import useStyles from './styles';
 
 import DetailsCard from './components/detailsCard/DetailsCard';
@@ -8,6 +9,13 @@ import InputCard from './components/inputCard/InputCard';
 
 const App = () => {
   const classes = useStyles();
+  const mainCard = useRef(null);
+  const { transactions } = useContext(TransactionsContext);
+
+  useEffect(() => {
+    mainCard.current?.scrollIntoView({ behaviour: "smooth" });
+  }, [transactions])
+
 
   return (
     <div>
@@ -16,7 +24,7 @@ const App = () => {
         <Grid item xs={12} sm={3} className={classes.mobile}>
           <DetailsCard title="Income" />
         </Grid>
-        <Grid item xs={12} sm={4} className={classes.main}>
+        <Grid item xs={12} sm={4} className={classes.main} ref={mainCard}>
           <InputCard />
         </Grid>
         <Grid item xs={12} sm={3} className={classes.desktop}>
