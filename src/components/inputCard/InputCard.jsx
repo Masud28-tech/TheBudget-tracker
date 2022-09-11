@@ -5,6 +5,7 @@ import useStyles from './styles';
 
 import Form from './form.component/Form';
 import List from './list.component/List';
+import InfoSpeech from './infoSpeech.component.jsx/InfoSpeech';
 
 const InputCard = () => {
     const classes = useStyles();
@@ -21,7 +22,7 @@ const InputCard = () => {
                     variant='subtitle1'
                     style={{ lineHeight: '1.5em', marginTop: '20px' }}
                 >
-                    Try saying: Add income ₹100 in Category Salary for Monday...
+                    <InfoSpeech />
                 </Typography>
                 <Divider className={classes.divider} />
                 <Form />

@@ -7,7 +7,7 @@ import { TransactionsContext } from '../../../context/transactionsContext';
 import { incomeCategories, expenseCategories } from '../../../constants/categories';
 import formatDate from '../../../utils/formatDate';
 import useStyles from './styles';
-import { lightGreen } from '@material-ui/core/colors';
+import CustomAlert from '../../customAlert/CustomAlert';
 
 const initialValues = {
     id: '',
@@ -21,13 +21,13 @@ const Form = () => {
     const { segment } = useSpeechContext();
     const { addTransaction } = useContext(TransactionsContext);
     const [formData, setFormData] = useState(initialValues);
+    const [isAlertOpen, setIsAlertOpen] = useState(false);
 
     const { type, category, amount, date, id } = formData;
 
     const selectedCategory = type === "Income" ? incomeCategories : expenseCategories;
 
     //CREATION OF TRANSACTIONS 
-
     const createTransaction = () => {
         if (Number.isNaN(Number(amount)) || !date.includes('-'))
             return;
@@ -35,6 +35,7 @@ const Form = () => {
         const transaction = { ...formData, amount: Number(amount), id: uuidv4(), date: formatDate(date) };
         addTransaction(transaction);
         setFormData(initialValues);
+        setIsAlertOpen(true);
     }
 
     //B) USIGN SPEECH OR VOICE VIA SPEECHLY 
@@ -86,6 +87,8 @@ const Form = () => {
 
     return (
         <Grid container spacing={2}>
+            <CustomAlert open={isAlertOpen} setOpen={setIsAlertOpen} />
+            
             <Grid item xs={12}>
                 <Typography align='center' variant='subtitle2' gutterBottom>
                     {
