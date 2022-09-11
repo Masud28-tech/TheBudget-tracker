@@ -7,10 +7,12 @@ featuers:
 3. Voice recognision and automatic data filling about transactions.
 
 How to use:
-a] using voice command 
   1. press the button 
   2. press and hold spacebar while speaking and leave when done, it can be seen in the site what user is saying.
+  or
+  Enter the data about transaction manully using form.
 
 Project deployed at https://thebudgetracker-masud.netlify.app/
 
 <img width="1057" alt="image" src="https://user-images.githubusercontent.com/65458743/189540685-855d54b1-108e-4aa7-9db2-652eb7a6d30f.png">
+
