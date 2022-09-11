@@ -1,5 +1,5 @@
 import { useRef, useEffect, useContext } from 'react';
-import { Grid } from '@material-ui/core';
+import { Grid, Typography, } from '@material-ui/core';
 import { PushToTalkButtonContainer, PushToTalkButton } from '@speechly/react-ui';
 import { TransactionsContext } from './context/transactionsContext';
 import useStyles from './styles';
@@ -38,6 +38,13 @@ const App = () => {
       <PushToTalkButtonContainer>
         <PushToTalkButton />
       </PushToTalkButtonContainer>
+
+        <Typography className={classes.mobile} variant='h5' style={{ color: 'white', marginLeft: '1rem', position: 'absolute' }} >
+          View code on {' '}
+          <a href="https://github.com/Masud28-tech/voice-manager" target='_blank' style={{ textDecoration: 'none' }}>
+            Github
+          </a>
+        </Typography>
     </div>
   )
 }
