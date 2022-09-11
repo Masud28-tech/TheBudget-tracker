@@ -9,7 +9,9 @@ featuers:
 How to use:
   1. press the button 
   2. press and hold spacebar while speaking and leave when done, it can be seen in the site what user is saying.
+  
   or
+  
   Enter the data about transaction manully using form.
 
 Project deployed at https://thebudgetracker-masud.netlify.app/
